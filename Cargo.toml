@@ -1,0 +1,15 @@
+[package]
+name = "cli-log"
+version = "0.1.0"
+authors = ["dystroy <denys.seguret@gmail.com>"]
+repository = "https://github.com/Canop/cli-log"
+description = "a simple logging facility configured with an env variable"
+edition = "2018"
+keywords = ["log", "terminal", "file"]
+license = "MIT"
+categories = []
+readme = "README.md"
+
+[dependencies]
+chrono = "0.4"
+log = { version = "0.4", features = ["std"] }
