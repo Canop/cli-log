@@ -69,7 +69,7 @@ If you don't set any `SMALL_APP_LOG` env variable, there won't be any log.
 A convenient way to set the env variable is to launch the app as
 
 ```cli
-SMALL_APP_LOG=debug small_app
+SMALL_APP_LOG=debug small-app
 ```
 
 or, during development,
@@ -78,18 +78,18 @@ or, during development,
 SMALL_APP_LOG=debug cargo run
 ```
 
-This creates a `small_app.log` file containing information like the level,
+This creates a `small-app.log` file containing information like the level,
 app version, and of course the log operations you did with time precise to
 the ms and the logging module (target):
 
 ```
-13:39:53.511 [INFO] cli_log - Starting small-app v0.1.0 with log level DEBUG
-13:39:53.511 [INFO] small_app - count is 42
-13:39:53.511 [DEBUG] small_app - data: AppData {
+13:39:53.511 [INFO] cli_log: Starting small-app v0.1.0 with log level DEBUG
+13:39:53.511 [INFO] small_app: count is 42
+13:39:53.511 [DEBUG] small_app: data: AppData {
     count: 42,
 }
-13:39:53.511 [WARN] small_app - this application does nothing
-13:39:53.511 [INFO] small_app - bye
+13:39:53.511 [WARN] small_app: this application does nothing
+13:39:53.511 [INFO] small_app: bye
 ```
 
 This log file can typically be followed with `tail -f small_app.log`.
