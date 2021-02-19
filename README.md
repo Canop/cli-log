@@ -14,7 +14,7 @@
 
 # cli-log
 
-The boilerplate to have some file logging with a level given by an environment variable.
+The boilerplate to have some file logging with a level given by an environment variable, and a facility to log execution durations according to the relevant log level.
 
 It's convenient for terminal applications because you don't want to mix log with stdout or stderr.
 
@@ -45,23 +45,28 @@ In Cargo.toml:
 Here's a complete application using cli-log (it can be found in examples):
 
 ```
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate log;
+#[macro_use] extern crate cli_log;
 
 #[derive(Debug)]
 struct AppData {
     count: usize,
 }
+impl AppData {
+    fn compute(&mut self) {
+        self.count += 7;
+    }
+}
 
 fn main() {
     cli_log::init("small-app");
-    let app_data = AppData { count: 42 };
+    let mut app_data = AppData { count: 35 };
+    time!(Debug, app_data.compute());
     info!("count is {}", app_data.count);
     debug!("data: {:#?}", &app_data);
     warn!("this application does nothing");
     info!("bye");
 }
-
 ```
 
 If you don't set any `SMALL_APP_LOG` env variable, there won't be any log.
@@ -83,13 +88,14 @@ app version, and of course the log operations you did with time precise to
 the ms and the logging module (target):
 
 ```
-13:39:53.511 [INFO] cli_log: Starting small-app v0.1.0 with log level DEBUG
-13:39:53.511 [INFO] small_app: count is 42
-13:39:53.511 [DEBUG] small_app: data: AppData {
+11:45:37.565 [INFO] cli_log: Starting small-app v0.1.0 with log level DEBUG
+11:45:37.565 [DEBUG] small_app: app_data.compute() took 198ns
+11:45:37.565 [INFO] small_app: count is 42
+11:45:37.565 [DEBUG] small_app: data: AppData {
     count: 42,
 }
-13:39:53.511 [WARN] small_app: this application does nothing
-13:39:53.511 [INFO] small_app: bye
+11:45:37.565 [WARN] small_app: this application does nothing
+11:45:37.565 [INFO] small_app: bye
 ```
 
 This log file can typically be followed with `tail -f small_app.log`.

@@ -1,4 +1,5 @@
-//! The boilerplate to have some file logging with a level given by an environment variable.
+//! The boilerplate to have some file logging with a level given by an environment variable,
+//! and a facility to log execution durations according to the relevant log level.
 //!
 //! It's especially convenient for terminal applications
 //! because you don't want to mix log with stdout or stderr.
@@ -19,17 +20,23 @@
 //! Here's a complete application using cli-log (it can be found in examples):
 //!
 //! ```
-//! #[macro_use]
-//! extern crate log;
+//! #[macro_use] extern crate log;
+//! #[macro_use] extern crate cli_log;
 //!
 //! #[derive(Debug)]
 //! struct AppData {
 //!     count: usize,
 //! }
+//! impl AppData {
+//!     fn compute(&mut self) {
+//!         self.count += 7;
+//!     }
+//! }
 //!
 //! fn main() {
 //!     cli_log::init("small-app");
-//!     let app_data = AppData { count: 42 };
+//!     let mut app_data = AppData { count: 35 };
+//!     time!(Debug, app_data.compute());
 //!     info!("count is {}", app_data.count);
 //!     debug!("data: {:#?}", &app_data);
 //!     warn!("this application does nothing");
@@ -67,10 +74,10 @@
 //! ```
 //!
 
-#[macro_use]
-extern crate log;
+#[macro_use] extern crate log;
 
 mod file_logger;
+mod time;
 
 use {
     file_logger::FileLogger,
