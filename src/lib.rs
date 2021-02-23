@@ -14,7 +14,9 @@
 //! So log initialization is just
 //!
 //! ```
-//! cli_log::init("my-app");
+//! #[macro_use] extern crate log;
+//! #[macro_use] extern crate cli_log;
+//! init_cli_log!();
 //! ```
 //!
 //! Here's a complete application using cli-log (it can be found in examples):
@@ -34,7 +36,7 @@
 //! }
 //!
 //! fn main() {
-//!     cli_log::init("small-app");
+//!     init_cli_log!();
 //!     let mut app_data = AppData { count: 35 };
 //!     time!(Debug, app_data.compute());
 //!     info!("count is {}", app_data.count);
@@ -94,7 +96,7 @@ use {
 
 
 /// configure the application log according to env variable.
-pub fn init(app_name: &str) {
+pub fn init(app_name: &str, app_version: &str) {
     let env_var_name = format!(
         "{}_LOG",
         app_name.to_ascii_uppercase().replace('-', "_"),
@@ -116,9 +118,44 @@ pub fn init(app_name: &str) {
         info!(
             "Starting {} v{} with log level {}",
             app_name,
-            env!("CARGO_PKG_VERSION"),
+            app_version,
             level
         );
     }
 }
+
+/// configure the application log according to env variable
+///
+/// Example:
+///
+/// ```
+/// #[macro_use] extern crate log;
+/// #[macro_use] extern crate cli_log;
+/// init_cli_log!();
+/// ```
+/// You may specify an altername application name instead
+/// of your crate name:
+///
+/// ```
+/// #[macro_use] extern crate log;
+/// #[macro_use] extern crate cli_log;
+/// init_cli_log!("my-app");
+/// ```
+///
+/// The application name will also be used to derive the
+/// env variable name giving the log level, for example
+/// `MY_APP_LOG=info` for an application named `my-app`.
+// The point of this macro is to ensure `env!(CARGO_PKG_NAME)`
+// and  `env!(CARGO_PKG_VERSION)` are expanded for the outer
+// package, not for cli-log
+#[macro_export]
+macro_rules! init_cli_log {
+    () => {
+        cli_log::init(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
+    };
+    ($app_name: expr) => {
+        cli_log::init($app_name, env!("CARGO_PKG_VERSION"));
+    };
+}
+
 

@@ -28,7 +28,7 @@ computed from the name of the application.
 So log initialization is just
 
 ```
-cli_log::init("my-app");
+init_cli_log!();
 ```
 
 
@@ -37,7 +37,7 @@ cli_log::init("my-app");
 In Cargo.toml:
 
     log = "0.4"
-    cli-log = "0.1"
+    cli-log = "1.1"
 
 
 ### Usage
@@ -59,7 +59,7 @@ impl AppData {
 }
 
 fn main() {
-    cli_log::init("small-app");
+    init_cli_log!();
     let mut app_data = AppData { count: 35 };
     time!(Debug, app_data.compute());
     info!("count is {}", app_data.count);

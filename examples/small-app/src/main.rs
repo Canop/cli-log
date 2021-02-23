@@ -12,7 +12,7 @@ impl AppData {
 }
 
 fn main() {
-    cli_log::init("small-app");
+    init_cli_log!();
     let mut app_data = AppData { count: 35 };
     time!(Debug, app_data.compute());
     info!("count is {}", app_data.count);

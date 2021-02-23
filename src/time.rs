@@ -35,9 +35,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!(Debug, "{} took {:?}", stringify!($timed), start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!(Debug, "{} took {:?}", stringify!($timed), start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
@@ -46,9 +49,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!($level) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!($level, "{} took {:?}", stringify!($timed), start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!($level, "{} took {:?}", stringify!($timed), start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
@@ -57,9 +63,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!(Debug, "{} took {:?}", $name, start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!(Debug, "{} took {:?}", $name, start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
@@ -68,9 +77,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!($level) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!($level, "{} took {:?}", $name, start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!($level, "{} took {:?}", $name, start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
@@ -79,9 +91,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!(Debug, "{} on {:?} took {:?}", $cat, $name, start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!(Debug, "{} on {:?} took {:?}", $cat, $name, start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
@@ -90,9 +105,12 @@ macro_rules! time {
         use log::Level::*;
         if log_enabled!($level) {
             let start = std::time::Instant::now();
-            let value = $timed;
-            log!($level, "{} on {:?} took {:?}", $cat, $name, start.elapsed());
-            value
+            match $timed {
+                value => {
+                    log!($level, "{} on {:?} took {:?}", $cat, $name, start.elapsed());
+                    value
+                }
+            }
         } else {
             $timed
         }
