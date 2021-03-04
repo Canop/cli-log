@@ -19,6 +19,11 @@
 //! init_cli_log!();
 //! ```
 //!
+//! With the `"mem"` feature (enabled by default), when the OS is compatible
+//! (unix like), you may dump the current and peak memory usage with
+//! the `log_mem` function.
+//!
+//!
 //! Here's a complete application using cli-log (it can be found in examples):
 //!
 //! ```
@@ -42,6 +47,7 @@
 //!     info!("count is {}", app_data.count);
 //!     debug!("data: {:#?}", &app_data);
 //!     warn!("this application does nothing");
+//!     cli_log::log_mem(log::Level::Info);
 //!     info!("bye");
 //! }
 //!
@@ -66,96 +72,33 @@
 //! the ms and the logging module (target):
 //!
 //! ```log
-//! 13:39:53.511 [INFO] cli_log: Starting small-app v0.1.0 with log level DEBUG
-//! 13:39:53.511 [INFO] small_app: count is 42
-//! 13:39:53.511 [DEBUG] small_app: data: AppData {
+//! 21:03:24.081 [INFO] cli_log::init: Starting small-app v1.0.1 with log level DEBUG
+//! 21:03:24.081 [DEBUG] small_app: app_data.compute() took 312ns
+//! 21:03:24.081 [INFO] small_app: count is 42
+//! 21:03:24.081 [DEBUG] small_app: data: AppData {
 //!     count: 42,
 //! }
-//! 13:39:53.511 [WARN] small_app: this application does nothing
-//! 13:39:53.511 [INFO] small_app: bye
+//! 21:03:24.081 [WARN] small_app: this application does nothing
+//! 21:03:24.081 [INFO] cli_log::mem: Physical mem usage: current=938K, peak=3.3M
+//! 21:03:24.082 [INFO] small_app: bye
 //! ```
 //!
 
 #[macro_use] extern crate log;
 
 mod file_logger;
+mod init;
 mod time;
 
-use {
-    file_logger::FileLogger,
-    log::{
-        LevelFilter,
-    },
-    std::{
-        env,
-        fs::File,
-        str::FromStr,
-        sync::Mutex,
-    },
+pub use {
+    init::*,
 };
 
+#[cfg(feature = "mem")]
+mod mem;
+#[cfg(feature = "mem")]
+pub use mem::log_mem;
 
-/// configure the application log according to env variable.
-pub fn init(app_name: &str, app_version: &str) {
-    let env_var_name = format!(
-        "{}_LOG",
-        app_name.to_ascii_uppercase().replace('-', "_"),
-    );
-    let level = env::var(&env_var_name).unwrap_or_else(|_| "off".to_string());
-    if level == "off" {
-        return;
-    }
-    if let Ok(level) = LevelFilter::from_str(&level) {
-        let log_file_name = format!("{}.log", app_name);
-        let file = File::create(&log_file_name)
-            .expect("Log file can't be created");
-        log::set_max_level(level);
-        let logger = FileLogger {
-            file: Mutex::new(file),
-            level,
-        };
-        log::set_boxed_logger(Box::new(logger)).unwrap();
-        info!(
-            "Starting {} v{} with log level {}",
-            app_name,
-            app_version,
-            level
-        );
-    }
-}
 
-/// configure the application log according to env variable
-///
-/// Example:
-///
-/// ```
-/// #[macro_use] extern crate log;
-/// #[macro_use] extern crate cli_log;
-/// init_cli_log!();
-/// ```
-/// You may specify an altername application name instead
-/// of your crate name:
-///
-/// ```
-/// #[macro_use] extern crate log;
-/// #[macro_use] extern crate cli_log;
-/// init_cli_log!("my-app");
-/// ```
-///
-/// The application name will also be used to derive the
-/// env variable name giving the log level, for example
-/// `MY_APP_LOG=info` for an application named `my-app`.
-// The point of this macro is to ensure `env!(CARGO_PKG_NAME)`
-// and  `env!(CARGO_PKG_VERSION)` are expanded for the outer
-// package, not for cli-log
-#[macro_export]
-macro_rules! init_cli_log {
-    () => {
-        cli_log::init(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
-    };
-    ($app_name: expr) => {
-        cli_log::init($app_name, env!("CARGO_PKG_VERSION"));
-    };
-}
 
 
