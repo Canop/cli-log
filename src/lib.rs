@@ -14,9 +14,7 @@
 //! So log initialization is just
 //!
 //! ```
-//! #[macro_use] extern crate log;
-//! #[macro_use] extern crate cli_log;
-//! init_cli_log!();
+//! cli_log::init_cli_log!();
 //! ```
 //!
 //! With the `"mem"` feature (enabled by default), when the OS is compatible
@@ -27,8 +25,8 @@
 //! Here's a complete application using cli-log (it can be found in examples):
 //!
 //! ```
-//! #[macro_use] extern crate log;
-//! #[macro_use] extern crate cli_log;
+//! use log::*;
+//! use cli_log::{init_cli_log, log_mem, time};
 //!
 //! #[derive(Debug)]
 //! struct AppData {
@@ -47,7 +45,7 @@
 //!     info!("count is {}", app_data.count);
 //!     debug!("data: {:#?}", &app_data);
 //!     warn!("this application does nothing");
-//!     cli_log::log_mem(log::Level::Info);
+//!     log_mem(log::Level::Info);
 //!     info!("bye");
 //! }
 //!
@@ -83,8 +81,6 @@
 //! 21:03:24.082 [INFO] small_app: bye
 //! ```
 //!
-
-#[macro_use] extern crate log;
 
 mod file_logger;
 mod init;

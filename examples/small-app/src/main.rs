@@ -1,5 +1,5 @@
-#[macro_use] extern crate log;
-#[macro_use] extern crate cli_log;
+use log::*;
+use cli_log::*;
 
 #[derive(Debug)]
 struct AppData {

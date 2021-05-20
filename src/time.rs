@@ -13,8 +13,8 @@
 /// Examples:
 ///
 /// ```
-/// #[macro_use] extern crate log;
-/// #[macro_use] extern crate cli_log;
+/// # use log::*;
+/// # use cli_log::*;
 /// # fn do_stuff(arg: usize) -> Result<usize, String> {
 /// #    Ok(arg)
 /// # }
@@ -32,7 +32,7 @@
 #[macro_export]
 macro_rules! time {
     ($timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -46,7 +46,7 @@ macro_rules! time {
         }
     }};
     ($level: ident, $timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {
@@ -60,7 +60,7 @@ macro_rules! time {
         }
     }};
     ($name: expr, $timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -74,7 +74,7 @@ macro_rules! time {
         }
     }};
     ($level: ident, $name: expr, $timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {
@@ -88,7 +88,7 @@ macro_rules! time {
         }
     }};
     ($cat: expr, $name :expr,  $timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -102,7 +102,7 @@ macro_rules! time {
         }
     }};
     ($level: ident, $cat: expr, $name :expr,  $timed: expr $(,)?) => {{
-        use log::Level::*;
+        use log::{*, Level::*};
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {

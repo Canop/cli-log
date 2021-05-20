@@ -34,7 +34,7 @@ pub fn init(app_name: &str, app_version: &str) {
             level,
         };
         log::set_boxed_logger(Box::new(logger)).unwrap();
-        info!(
+        log::info!(
             "Starting {} v{} with log level {}",
             app_name,
             app_version,
@@ -48,17 +48,13 @@ pub fn init(app_name: &str, app_version: &str) {
 /// Example:
 ///
 /// ```
-/// #[macro_use] extern crate log;
-/// #[macro_use] extern crate cli_log;
-/// init_cli_log!();
+/// cli_log::init_cli_log!();
 /// ```
 /// You may specify an altername application name instead
 /// of your crate name:
 ///
 /// ```
-/// #[macro_use] extern crate log;
-/// #[macro_use] extern crate cli_log;
-/// init_cli_log!("my-app");
+/// cli_log::init_cli_log!("my-app");
 /// ```
 ///
 /// The application name will also be used to derive the

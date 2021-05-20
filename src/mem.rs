@@ -1,5 +1,5 @@
 
-use log::Level;
+use log::*;
 
 /// log the current and peak physical memory used by
 /// the current process, if the given log level is
