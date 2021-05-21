@@ -14,7 +14,17 @@
 //! So log initialization is just
 //!
 //! ```
-//! cli_log::init_cli_log!();
+//! use cli_log::*; // also import logging macros
+//! init_cli_log!();
+//! ```
+//!
+//! If you prefer not having to declare cli_log import for
+//! all the log and cli-log logging macros, you may use the
+//! old `#[macro_use]` import in your main.rs file:
+//!
+//! ```
+//! #[macro_use] extern crate cli_log;
+//! init_cli_log!();
 //! ```
 //!
 //! With the `"mem"` feature (enabled by default), when the OS is compatible
@@ -25,8 +35,7 @@
 //! Here's a complete application using cli-log (it can be found in examples):
 //!
 //! ```
-//! use log::*;
-//! use cli_log::{init_cli_log, log_mem, time};
+//! use cli_log::*;
 //!
 //! #[derive(Debug)]
 //! struct AppData {
@@ -45,10 +54,9 @@
 //!     info!("count is {}", app_data.count);
 //!     debug!("data: {:#?}", &app_data);
 //!     warn!("this application does nothing");
-//!     log_mem(log::Level::Info);
+//!     log_mem(Level::Info);
 //!     info!("bye");
 //! }
-//!
 //! ```
 //!
 //! If you don't set any `SMALL_APP_LOG` env variable, there won't be any log.
@@ -88,13 +96,12 @@ mod time;
 
 pub use {
     init::*,
+    log::*,
 };
 
 #[cfg(feature = "mem")]
 mod mem;
 #[cfg(feature = "mem")]
 pub use mem::log_mem;
-
-
 
 

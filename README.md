@@ -30,7 +30,15 @@ computed from the name of the application.
 So log initialization is just
 
 ```
-#[macro_use] extern crate log;
+use cli_log::*; // also import logging macros
+init_cli_log!();
+```
+
+If you prefer not having to declare cli_log import for
+all the log and cli-log logging macros, you may use the
+old `#[macro_use]` import in your main.rs file:
+
+```
 #[macro_use] extern crate cli_log;
 init_cli_log!();
 ```
@@ -43,8 +51,7 @@ the `log_mem` function.
 Here's a complete application using cli-log (it can be found in examples):
 
 ```
-#[macro_use] extern crate log;
-#[macro_use] extern crate cli_log;
+use cli_log::*;
 
 #[derive(Debug)]
 struct AppData {
@@ -63,10 +70,9 @@ fn main() {
     info!("count is {}", app_data.count);
     debug!("data: {:#?}", &app_data);
     warn!("this application does nothing");
-    cli_log::log_mem(log::Level::Info);
+    log_mem(Level::Info);
     info!("bye");
 }
-
 ```
 
 If you don't set any `SMALL_APP_LOG` env variable, there won't be any log.

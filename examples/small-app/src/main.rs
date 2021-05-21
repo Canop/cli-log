@@ -1,4 +1,3 @@
-use log::*;
 use cli_log::*;
 
 #[derive(Debug)]
@@ -18,6 +17,6 @@ fn main() {
     info!("count is {}", app_data.count);
     debug!("data: {:#?}", &app_data);
     warn!("this application does nothing");
-    cli_log::log_mem(log::Level::Info);
+    log_mem(Level::Info);
     info!("bye");
 }
