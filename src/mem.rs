@@ -1,4 +1,3 @@
-
 use log::*;
 
 /// log the current and peak physical memory used by

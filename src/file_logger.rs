@@ -20,11 +20,17 @@ pub(crate) struct FileLogger {
 }
 
 impl Log for FileLogger {
-    fn enabled(&self, metadata: &Metadata<'_>) -> bool {
+    fn enabled(
+        &self,
+        metadata: &Metadata<'_>,
+    ) -> bool {
         metadata.level() <= self.level
     }
 
-    fn log(&self, record: &Record<'_>) {
+    fn log(
+        &self,
+        record: &Record<'_>,
+    ) {
         if self.enabled(record.metadata()) {
             let mut w = self.file.lock().unwrap();
             let _ = writeln!(

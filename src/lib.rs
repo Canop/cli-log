@@ -88,7 +88,6 @@
 //! 21:03:24.081 [INFO] cli_log::mem: Physical mem usage: current=938K, peak=3.3M
 //! 21:03:24.082 [INFO] small_app: bye
 //! ```
-//!
 
 mod file_logger;
 mod init;
@@ -103,5 +102,3 @@ pub use {
 mod mem;
 #[cfg(feature = "mem")]
 pub use mem::log_mem;
-
-

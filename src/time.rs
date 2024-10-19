@@ -32,7 +32,10 @@
 #[macro_export]
 macro_rules! time {
     ($timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -46,7 +49,10 @@ macro_rules! time {
         }
     }};
     ($level: ident, $timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {
@@ -60,7 +66,10 @@ macro_rules! time {
         }
     }};
     ($name: expr, $timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -74,7 +83,10 @@ macro_rules! time {
         }
     }};
     ($level: ident, $name: expr, $timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {
@@ -88,7 +100,10 @@ macro_rules! time {
         }
     }};
     ($cat: expr, $name :expr,  $timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!(Debug) {
             let start = std::time::Instant::now();
             match $timed {
@@ -102,7 +117,10 @@ macro_rules! time {
         }
     }};
     ($level: ident, $cat: expr, $name :expr,  $timed: expr $(,)?) => {{
-        use cli_log::{*, Level::*};
+        use cli_log::{
+            Level::*,
+            *,
+        };
         if log_enabled!($level) {
             let start = std::time::Instant::now();
             match $timed {
