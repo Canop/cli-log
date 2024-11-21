@@ -104,3 +104,6 @@ the ms and the logging module (target):
 21:03:24.081 [INFO] cli_log::mem: Physical mem usage: current=938K, peak=3.3M
 21:03:24.082 [INFO] small_app: bye
 ```
+
+The name of the environment variable (`SMALL_APP_LOG` in our example) is based on the name of the crate (eg `small-app`),
+uppercased and with dashes (`-`) replaced by underscores (`_`), and with `_LOG` added.
