@@ -1,6 +1,6 @@
 [package]
 name = "cli-log"
-version = "2.1.0"
+version = "2.1.1"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 repository = "https://github.com/Canop/cli-log"
 description = "a simple logging and timing facility configured with an env variable"
@@ -9,6 +9,7 @@ keywords = ["log", "terminal", "file", "benchmark"]
 license = "MIT"
 categories = []
 readme = "README.md"
+rust-version = "1.71"
 
 [features]
 default = ["mem"]
@@ -17,5 +18,5 @@ mem = ["proc-status", "file-size"]
 [dependencies]
 chrono = "0.4"
 log = { version = "0.4", features = ["std"] }
-proc-status = { version = "0.1", optional = true }
+proc-status = { version = "0.2", optional = true }
 file-size = { version = "1.0.3", optional = true }
